@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Equipamento {
-    private static int qntdEquipamentos;
     private String identificador;
     private String numeroPatrimonio;
     private String nome;
@@ -31,29 +30,33 @@ public class Equipamento {
         setLaboratorio(laboratorio);
         status = Status.DISPONIVEL;
 
-        qntdEquipamentos++;
-        // identificador = toString(qntdEquipamentos);
+        // identificador = criarIdentificadorLaboratorio();
     }
+
     public void consultar(){}
 
     public void setNumeroPatrimonio(String numeroPatrimonio) {
-        if(!numeroPatrimonio.isEmpty())
-            this.numeroPatrimonio = numeroPatrimonio;
-        else
-            System.out.println("Invalido.");
+        if(numeroPatrimonio.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        if(!numeroPatrimonio.matches("[0-9]+"))
+            throw new IllegalArgumentException("Nao e compativel.");
+        this.numeroPatrimonio = numeroPatrimonio;
     }
+
     public void setNome(String nome) {
-        if(!nome.isEmpty())
-            this.nome = nome;
-        else
-            System.out.println("Invalido.");
+        if(nome.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        if(!nome.matches("[a-zA-Z]+"))
+            throw new IllegalArgumentException("Nao e compativel.");
+        this.nome = nome;
     }
+
     public void setDescricao(String descricao) {
-        if(!descricao.isEmpty())
-            this.descricao = descricao;
-        else
-            System.out.println("Invalido.");
+        if(descricao.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        this.descricao = descricao;
     }
+
     public void setLaboratorio(Laboratorio laboratorio){
         this.laboratorio = laboratorio;
     }

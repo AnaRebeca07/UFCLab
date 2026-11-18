@@ -5,6 +5,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private String identificador;
     private List<Reserva> reservas = new ArrayList<>();
     private List<Emprestimo> emprestimos = new ArrayList<>();
 
@@ -12,6 +13,7 @@ public class Usuario {
         setNome(nome);
         setEmail(email);
         setSenha(senha);
+        // identificador = criarIdentificadorLaboratorio();
     }
 
     public void consultar(){
@@ -19,24 +21,22 @@ public class Usuario {
     }
 
     public void setNome(String nome) {
-        if(!nome.isEmpty())
-            this.nome = nome;
-        else
-            System.out.println("Invalido.");
+        if(nome.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        if(!nome.matches("[a-zA-Z]+"))
+            throw new IllegalArgumentException("Nao e compativel.");
+        this.nome = nome;
     }
 
     public void setEmail(String email) {
-        if(!email.isEmpty())
-            this.email = email;
-        else
-            System.out.println("Invalido.");
+        // implementar depois
+        this.email = email;
     }
 
     public void setSenha(String senha) {
-        if(!senha.isEmpty())
-            this.senha = senha;
-        else
-            System.out.println("Invalido.");
+        if(senha.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        this.senha = senha;
     }
 
     public String getNome(){
@@ -45,5 +45,9 @@ public class Usuario {
 
     public String getEmail() {
         return email;
+    }
+
+    public void listarEmprestimos(){
+
     }
 }

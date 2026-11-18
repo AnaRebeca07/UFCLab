@@ -3,10 +3,11 @@ public class Discente extends Usuario {
 
     public Discente(String nome, String email, String senha, String matricula){
         super(nome, email, senha);
-        if(!matricula.isEmpty())
-            this.matricula = matricula;
-        else
-            System.out.println("Invalido.");
+        if(matricula.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        if(!matricula.matches("[0-9]+"))
+            throw new IllegalArgumentException("Nao e compativel.");
+        this.matricula = matricula;
     }
 
     // Colocar posteriormente os métodos;

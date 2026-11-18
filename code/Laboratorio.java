@@ -7,51 +7,45 @@ public class Laboratorio {
     private String local;
     private String descricao;
     private int capacidade;
-    private boolean ativo;
     private List<Equipamento> equipamentos = new ArrayList<>();
-    private static int qntdLaboratorios;
 
     public Laboratorio(String nome, String local, String descricao, int capacidade){
         setNome(nome);
         setLocal(local);
         setCapacidade(capacidade);
         setDescricao(descricao);
-
-        ativo = true;
-
-        qntdLaboratorios++;
-        // identificador = toString(qntdLaboratorios);
+        // identificador = criarIdentificadorLaboratorio();
     }
     public void consultar(){
         // fazer a interface
     }
 
     public void setNome(String nome) {
-        if(!nome.isEmpty())
-            this.nome = nome;
-        else
-            System.out.println("Invalido.");
+        if(nome.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        if(!nome.matches("[a-zA-Z]+"))
+            throw new IllegalArgumentException("Nao e compativel.");
+        this.nome = nome;
     }
 
     public void setCapacidade(int capacidade) {
-        if(capacidade > 0)
-            this.capacidade = capacidade;
-        else
-            System.out.println("Invalido.");
+        if(capacidade <= 0 || capacidade > 50)
+            throw new IllegalArgumentException("Capacidade invalida.");
+        this.capacidade = capacidade;
     }
 
     public void setLocal(String local) {
-        if(!local.isEmpty())
-            this.local = local;
-        else
-            System.out.println("Invalido.");
+        if(local.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        if(!local.matches("[a-zA-Z]+"))
+            throw new IllegalArgumentException("Nao e compativel.");
+        this.local = local;
     }
 
     public void setDescricao(String descricao) {
-        if(!descricao.isEmpty())
-            this.descricao = descricao;
-        else
-            System.out.println("Invalido.");
+        if(descricao.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        this.descricao = descricao;
     }
 
     public String getIdentificador() {
@@ -72,9 +66,5 @@ public class Laboratorio {
 
     public String getNome() {
         return nome;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
     }
 }
