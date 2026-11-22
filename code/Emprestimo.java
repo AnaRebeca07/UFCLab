@@ -6,7 +6,10 @@ public class Emprestimo {
     private Equipamento equipamento;
     private Date dataRetirada, previsaoDevolucao;
 
-    public Emprestimo() {
-        
+    public Emprestimo(Usuario usuario, Equipamento equipamento, Date dataRetirada, Date previsaoDevolucao) {
+        this.usuario = usuario;
+        this.equipamento = equipamento;
+        this.dataRetirada = dataRetirada;
+        this.previsaoDevolucao = previsaoDevolucao;
     }
 }

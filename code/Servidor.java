@@ -1,18 +1,18 @@
 public class Servidor extends Usuario{
-    private String cadastro;
+    private String SIAPE;
 
-    public Servidor(String nome, String email, String senha, String cadastro){
+    public Servidor(String nome, String email, String senha, String SIAPE){
         super(nome, email, senha);
-        if(cadastro.isEmpty())
+        if(SIAPE.isEmpty())
             throw new IllegalArgumentException("Campo vazio.");
-        if(!cadastro.matches("[0-9]+"))
+        if(!SIAPE.matches("[0-9]+"))
             throw new IllegalArgumentException("Nao e compativel.");
-        this.cadastro = cadastro;
+        this.SIAPE = SIAPE;
     }
 
     // Colocar os métodos;
 
     public String getCadastro() {
-        return cadastro;
+        return SIAPE;
     }
 }

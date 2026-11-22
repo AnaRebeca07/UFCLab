@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Equipamento {
     private String identificador;
@@ -7,6 +8,7 @@ public class Equipamento {
     private String descricao;
     private Laboratorio laboratorio;
     private Status status;
+    private List<Emprestimo> emprestimos = new ArrayList<>();
     public enum Status {
         DISPONIVEL("Disponivel"),
         INDISPONIVEL("Indisponivel"),
@@ -79,5 +81,11 @@ public class Equipamento {
 
     public String getStatus() {
         return status.getMensagem();
+    }
+
+    public void listarEmprestimos(){
+        for (int i=0; i<emprestimos.size(); i++){
+            System.out.println(emprestimos.get(i));
+        }
     }
 }

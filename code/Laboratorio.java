@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Laboratorio {
     private String identificador;
@@ -8,6 +9,7 @@ public class Laboratorio {
     private String descricao;
     private int capacidade;
     private List<Equipamento> equipamentos = new ArrayList<>();
+    private List<Reserva> reservas = new ArrayList<>();
 
     public Laboratorio(String nome, String local, String descricao, int capacidade){
         setNome(nome);
@@ -66,5 +68,23 @@ public class Laboratorio {
 
     public String getNome() {
         return nome;
+    }
+
+    public void listarEquipamentos(){
+        for (int i=0; i<equipamentos.size(); i++){
+            System.out.println(equipamentos.get(i));
+        }
+    }
+
+    public void listarReservas(){
+        for (int i=0; i<reservas.size(); i++){
+            System.out.println(reservas.get(i));
+        }
+    }
+
+    public void removerEquipamento(Equipamento equipamento){
+        if (!equipamentos.contains(equipamento))
+            throw new NoSuchElementException("Esse equipamento não pertence a esse laboratorio");
+        equipamentos.remove(equipamento);
     }
 }

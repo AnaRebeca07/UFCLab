@@ -47,7 +47,15 @@ public class Usuario {
         return email;
     }
 
-    public void listarEmprestimos(){
+    public void listarEmprestimo(){
+        for (int i=0; i<emprestimos.size(); i++){
+            System.out.println(emprestimos.get(i));
+        }
+    }
 
+    public void listarReservas(){
+        for (int i=0; i<reservas.size(); i++){
+            System.out.println(reservas.get(i));
+        }
     }
 }
