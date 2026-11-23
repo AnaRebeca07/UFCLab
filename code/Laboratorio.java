@@ -17,9 +17,8 @@ public class Laboratorio {
         setCapacidade(capacidade);
         setDescricao(descricao);
         // identificador = criarIdentificadorLaboratorio();
-    }
-    public void consultar(){
-        // fazer a interface
+
+        Consulta.adicionarLaboratorio(this);
     }
 
     public void setNome(String nome) {
@@ -70,21 +69,19 @@ public class Laboratorio {
         return nome;
     }
 
-    public void listarEquipamentos(){
-        for (int i=0; i<equipamentos.size(); i++){
-            System.out.println(equipamentos.get(i));
-        }
+    public List<Equipamento> listarEquipamentos(){
+        return new ArrayList<Equipamento>(this.equipamentos);
     }
 
-    public void listarReservas(){
-        for (int i=0; i<reservas.size(); i++){
-            System.out.println(reservas.get(i));
-        }
+    public List<Reserva> listarReservas(){
+        return new ArrayList<Reserva>(this.reservas);
     }
 
     public void removerEquipamento(Equipamento equipamento){
         if (!equipamentos.contains(equipamento))
-            throw new NoSuchElementException("Esse equipamento não pertence a esse laboratorio");
+            throw new NoSuchElementException("Esse equipamento nao existe ou nao pertence a esse laboratorio.");
+        // if(equipamento.possuiEmprestimoNaoConcluido())
+            // excecao personalizada (regra de negocio)
         equipamentos.remove(equipamento);
     }
 }

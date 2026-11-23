@@ -10,9 +10,7 @@ public class Servidor extends Usuario{
         this.SIAPE = SIAPE;
     }
 
-    // Colocar os métodos;
-
-    public String getCadastro() {
+    public String getSIAPE() {
         return SIAPE;
     }
 }

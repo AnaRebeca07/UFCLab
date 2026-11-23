@@ -7,30 +7,13 @@ public class Equipamento {
     private String nome;
     private String descricao;
     private Laboratorio laboratorio;
-    private Status status;
     private List<Emprestimo> emprestimos = new ArrayList<>();
-    public enum Status {
-        DISPONIVEL("Disponivel"),
-        INDISPONIVEL("Indisponivel"),
-        ALUGADO("Alugado");
-
-        private final String mensagem;
-
-        Status(String mensagem) {
-            this.mensagem = mensagem;
-        }
-
-        public String getMensagem() {
-            return mensagem;
-        }
-    }
 
     public Equipamento(String numeroPatrimonio, String nome, String descricao, Laboratorio laboratorio){
         setNumeroPatrimonio(numeroPatrimonio);
         setNome(nome);
         setDescricao(descricao);
         setLaboratorio(laboratorio);
-        status = Status.DISPONIVEL;
 
         // identificador = criarIdentificadorLaboratorio();
     }
@@ -79,13 +62,12 @@ public class Equipamento {
         return laboratorio;
     }
 
-    public String getStatus() {
-        return status.getMensagem();
+    public List<Emprestimo> listarEmprestimos(){
+        return new ArrayList<Emprestimo>(this.emprestimos);
     }
 
-    public void listarEmprestimos(){
-        for (int i=0; i<emprestimos.size(); i++){
-            System.out.println(emprestimos.get(i));
-        }
+    // a logica aqui e que se o ultimo emprestimo estiver concluido, retornara falso para a frase "possui emprestimo nao concluido". so e precison checar o ultimo pois a regra de negocio nao permite dois emprestimos em andamento ao mesmo tempo
+    public boolean possuiEmprestimoNaoConcluido() {
+        return !emprestimos.getLast().concluido();
     }
 }

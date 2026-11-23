@@ -2,22 +2,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
-    private String nome;
-    private String email;
-    private String senha;
-    private String identificador;
-    private List<Reserva> reservas = new ArrayList<>();
-    private List<Emprestimo> emprestimos = new ArrayList<>();
+    protected String nome;
+    protected String email;
+    protected String senha;
+    protected String identificador;
+    protected List<Reserva> reservas = new ArrayList<>();
+    protected List<Emprestimo> emprestimos = new ArrayList<>();
 
     public Usuario(String nome, String email, String senha){
         setNome(nome);
         setEmail(email);
         setSenha(senha);
         // identificador = criarIdentificadorLaboratorio();
-    }
 
-    public void consultar(){
-        // vamos fazer interface;
+        Consulta.adicionarUsuario(this);
     }
 
     public void setNome(String nome) {
@@ -47,15 +45,11 @@ public class Usuario {
         return email;
     }
 
-    public void listarEmprestimo(){
-        for (int i=0; i<emprestimos.size(); i++){
-            System.out.println(emprestimos.get(i));
-        }
+    public List<Emprestimo> listarEmprestimo(){
+        return new ArrayList<Emprestimo>(this.emprestimos);
     }
 
-    public void listarReservas(){
-        for (int i=0; i<reservas.size(); i++){
-            System.out.println(reservas.get(i));
-        }
+    public List<Reserva> listarReservas(){
+        return new ArrayList<Reserva>(this.reservas);
     }
 }

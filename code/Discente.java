@@ -10,8 +10,6 @@ public class Discente extends Usuario {
         this.matricula = matricula;
     }
 
-    // Colocar posteriormente os métodos;
-
     public String getMatricula() {
         return matricula;
     }
