@@ -15,16 +15,20 @@ public class Equipamento {
         setDescricao(descricao);
         setLaboratorio(laboratorio);
 
-        // identificador = criarIdentificadorLaboratorio();
+        // identificador = Persistencia.criarIdentificadorEquipamento();
+
+        laboratorio.adicionarEquipamento(this);
     }
 
-    public void consultar(){}
+    // setters e getters
 
-    public void setNumeroPatrimonio(String numeroPatrimonio) {
+    private void setNumeroPatrimonio(String numeroPatrimonio) {
         if(numeroPatrimonio.isEmpty())
             throw new IllegalArgumentException("Campo vazio.");
         if(!numeroPatrimonio.matches("[0-9]+"))
             throw new IllegalArgumentException("Nao e compativel.");
+        if(Consulta.numeroPatrimonioRepetido(numeroPatrimonio))
+            // excecao personalizada
         this.numeroPatrimonio = numeroPatrimonio;
     }
 
@@ -62,11 +66,21 @@ public class Equipamento {
         return laboratorio;
     }
 
+    // metodos de regra de negocio a partir daqui
+
     public List<Emprestimo> listarEmprestimos(){
         return new ArrayList<Emprestimo>(this.emprestimos);
     }
 
-    // a logica aqui e que se o ultimo emprestimo estiver concluido, retornara falso para a frase "possui emprestimo nao concluido". so e precison checar o ultimo pois a regra de negocio nao permite dois emprestimos em andamento ao mesmo tempo
+    public void adicionarEmprestimo(Emprestimo emprestimo) {
+        if(emprestimo != null)
+            emprestimos.add(emprestimo);
+        else
+            throw new NullPointerException("Emprestimo nao existe.");
+    }
+
+    // pela regra de negocio, so e possivel haver um emprestimo por vez por equipamento
+    // por isso, o sistema checa apenas o ultimo emprestimo do historico
     public boolean possuiEmprestimoNaoConcluido() {
         return !emprestimos.getLast().concluido();
     }

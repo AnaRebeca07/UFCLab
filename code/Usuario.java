@@ -13,10 +13,12 @@ public class Usuario {
         setNome(nome);
         setEmail(email);
         setSenha(senha);
-        // identificador = criarIdentificadorLaboratorio();
+        // identificador = Persistencia.criarIdentificadorUsuario();
 
         Consulta.adicionarUsuario(this);
     }
+
+    // setters e getters
 
     public void setNome(String nome) {
         if(nome.isEmpty())
@@ -45,11 +47,29 @@ public class Usuario {
         return email;
     }
 
+    public String getCadastro() { return ""; }
+
+    // metodos de regra de negocio a partir daqui
+
+    public List<Reserva> listarReservas(){
+        return new ArrayList<Reserva>(this.reservas);
+    }
+
     public List<Emprestimo> listarEmprestimo(){
         return new ArrayList<Emprestimo>(this.emprestimos);
     }
 
-    public List<Reserva> listarReservas(){
-        return new ArrayList<Reserva>(this.reservas);
+    public void adicionarReserva(Reserva reserva) {
+        if(reserva != null)
+            reservas.add(reserva);
+        else
+            throw new NullPointerException("Reserva nao existe.");
+    }
+
+    public void adicionarEmprestimo(Emprestimo emprestimo) {
+        if(emprestimo != null)
+            emprestimos.add(emprestimo);
+        else
+            throw new NullPointerException("Emprestimo nao existe.");
     }
 }

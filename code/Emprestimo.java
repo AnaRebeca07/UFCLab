@@ -27,6 +27,9 @@ public class Emprestimo {
         this.dataRetirada = dataRetirada;
         this.previsaoDevolucao = previsaoDevolucao;
         status = Status.ANDAMENTO;
+
+        equipamento.adicionarEmprestimo(this);
+        usuario.adicionarEmprestimo(this);
     }
 
     public boolean concluido() {

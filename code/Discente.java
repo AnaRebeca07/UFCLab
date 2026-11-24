@@ -3,14 +3,25 @@ public class Discente extends Usuario {
 
     public Discente(String nome, String email, String senha, String matricula){
         super(nome, email, senha);
+        setMatricula(matricula);
+    }
+
+    // setters e getters
+
+    private void setMatricula(String matricula) {
         if(matricula.isEmpty())
             throw new IllegalArgumentException("Campo vazio.");
         if(!matricula.matches("[0-9]+"))
             throw new IllegalArgumentException("Nao e compativel.");
-        this.matricula = matricula;
+        if(matricula.length() != 6)
+            throw new IllegalArgumentException("Quantidade de digitos invalida.");
+        if(Consulta.cadastroRepetido(matricula))
+            // excecao personalizada
+            this.matricula = matricula;
     }
 
-    public String getMatricula() {
+    @Override
+    public String getCadastro() {
         return matricula;
     }
 }

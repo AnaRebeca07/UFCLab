@@ -10,7 +10,22 @@ public class Servidor extends Usuario{
         this.SIAPE = SIAPE;
     }
 
-    public String getSIAPE() {
+    // setters e getters
+
+    private void setSIAPE(String SIAPE) {
+        if(SIAPE.isEmpty())
+            throw new IllegalArgumentException("Campo vazio.");
+        if(!SIAPE.matches("[0-9]+"))
+            throw new IllegalArgumentException("Nao e compativel.");
+        if(SIAPE.length() != 7)
+            throw new IllegalArgumentException("Quantidade de digitos invalida.");
+        if(Consulta.cadastroRepetido(SIAPE))
+            // excecao personalizada
+            this.SIAPE = SIAPE;
+    }
+
+    @Override
+    public String getCadastro() {
         return SIAPE;
     }
 }

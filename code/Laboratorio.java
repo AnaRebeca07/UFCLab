@@ -5,21 +5,23 @@ import java.util.NoSuchElementException;
 public class Laboratorio {
     private String identificador;
     private String nome;
-    private String local;
+    private Centro centro;
     private String descricao;
     private int capacidade;
     private List<Equipamento> equipamentos = new ArrayList<>();
     private List<Reserva> reservas = new ArrayList<>();
 
-    public Laboratorio(String nome, String local, String descricao, int capacidade){
+    public Laboratorio(String nome, Centro centro, String descricao, int capacidade){
         setNome(nome);
-        setLocal(local);
+        setCentro(centro);
         setCapacidade(capacidade);
         setDescricao(descricao);
-        // identificador = criarIdentificadorLaboratorio();
+        // identificador = Persistencia.criarIdentificadorLaboratorio();
 
-        Consulta.adicionarLaboratorio(this);
+        centro.adicionarLaboratorio(this);
     }
+
+    // setters e getters
 
     public void setNome(String nome) {
         if(nome.isEmpty())
@@ -35,12 +37,9 @@ public class Laboratorio {
         this.capacidade = capacidade;
     }
 
-    public void setLocal(String local) {
-        if(local.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
-        if(!local.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Nao e compativel.");
-        this.local = local;
+    public void setCentro(Centro centro) {
+        if(centro != null)
+            this.centro = centro;
     }
 
     public void setDescricao(String descricao) {
@@ -61,13 +60,15 @@ public class Laboratorio {
         return descricao;
     }
 
-    public String getLocal() {
-        return local;
+    public Centro getCentro() {
+        return centro;
     }
 
     public String getNome() {
         return nome;
     }
+
+    // metodos de regra de negocio a partir daqui
 
     public List<Equipamento> listarEquipamentos(){
         return new ArrayList<Equipamento>(this.equipamentos);
@@ -75,6 +76,28 @@ public class Laboratorio {
 
     public List<Reserva> listarReservas(){
         return new ArrayList<Reserva>(this.reservas);
+    }
+
+    public void adicionarReserva(Reserva reserva) {
+        if(reserva != null)
+            reservas.add(reserva);
+        else
+            throw new NullPointerException("Reserva nao existe.");
+    }
+
+    public boolean possuiReservaMarcada() {
+        for(int i = 0;i < reservas.size();i++) {
+            if(reservas.get(i).marcada())
+                return true;
+        }
+        return false;
+    }
+
+    public void adicionarEquipamento(Equipamento equipamento) {
+        if(equipamento != null)
+            equipamentos.add(equipamento);
+        else
+            throw new NullPointerException("Equipamento nao existe.");
     }
 
     public void removerEquipamento(Equipamento equipamento){
