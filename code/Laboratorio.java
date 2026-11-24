@@ -1,6 +1,7 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class Laboratorio {
     private String identificador;
@@ -25,9 +26,7 @@ public class Laboratorio {
 
     public void setNome(String nome) {
         if(nome.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
-        if(!nome.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Nao e compativel.");
+            throw new IllegalArgumentException("Erro ao cadastrar nome: Campo vazio.");
         this.nome = nome;
     }
 
@@ -40,11 +39,13 @@ public class Laboratorio {
     public void setCentro(Centro centro) {
         if(centro != null)
             this.centro = centro;
+        else
+            throw new NullPointerException("Centro nao existe.");
     }
 
     public void setDescricao(String descricao) {
         if(descricao.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
+            throw new IllegalArgumentException("Erro ao cadastrar descricao: Campo vazio.");
         this.descricao = descricao;
     }
 
@@ -78,6 +79,16 @@ public class Laboratorio {
         return new ArrayList<Reserva>(this.reservas);
     }
 
+    public List<Reserva> listarReservasAtivas() {
+        List<Reserva> reservasAtivas = new ArrayList<>();
+
+        for(int i = 0;i < reservas.size();i++)
+            if(reservas.get(i).ativa())
+                reservasAtivas.add(reservas.get(i));
+
+        return reservasAtivas;
+    }
+
     public void adicionarReserva(Reserva reserva) {
         if(reserva != null)
             reservas.add(reserva);
@@ -85,10 +96,17 @@ public class Laboratorio {
             throw new NullPointerException("Reserva nao existe.");
     }
 
-    public boolean possuiReservaMarcada() {
-        for(int i = 0;i < reservas.size();i++) {
-            if(reservas.get(i).marcada())
-                return true;
+    public boolean possuiReservaAtiva() {
+        return !listarReservasAtivas().isEmpty();
+    }
+
+    // tirar daqui e colocar em uma interface + adicionar a versão de emprestimo
+    public boolean conflita(LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
+        List<Reserva> reservasAtivas = listarReservasAtivas();
+        for(int i = 0;i < reservasAtivas.size();i++) {
+            if (data.equals(reservasAtivas.get(i).getData()))
+                if(horaInicio.isBefore(reservasAtivas.get(i).getHoraTermino()) || horaTermino.isAfter(reservasAtivas.get(i).getHoraInicio()))
+                    return true;
         }
         return false;
     }
@@ -102,7 +120,7 @@ public class Laboratorio {
 
     public void removerEquipamento(Equipamento equipamento){
         if (!equipamentos.contains(equipamento))
-            throw new NoSuchElementException("Esse equipamento nao existe ou nao pertence a esse laboratorio.");
+            throw new NullPointerException("Esse equipamento nao existe ou nao pertence a esse laboratorio.");
         // if(equipamento.possuiEmprestimoNaoConcluido())
             // excecao personalizada (regra de negocio)
         equipamentos.remove(equipamento);

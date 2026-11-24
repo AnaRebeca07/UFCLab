@@ -24,30 +24,31 @@ public class Equipamento {
 
     private void setNumeroPatrimonio(String numeroPatrimonio) {
         if(numeroPatrimonio.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
+            throw new IllegalArgumentException("Erro ao cadastrar numero de patrimonio: Campo vazio.");
         if(!numeroPatrimonio.matches("[0-9]+"))
-            throw new IllegalArgumentException("Nao e compativel.");
-        if(Consulta.numeroPatrimonioRepetido(numeroPatrimonio))
+            throw new IllegalArgumentException("Erro ao cadastrar numero de patrimonio: Nao e compativel.");
+        // if(Consulta.numeroPatrimonioRepetido(numeroPatrimonio))
             // excecao personalizada
         this.numeroPatrimonio = numeroPatrimonio;
     }
 
     public void setNome(String nome) {
         if(nome.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
-        if(!nome.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Nao e compativel.");
+            throw new IllegalArgumentException("Erro ao cadastrar nome: Campo vazio.");
         this.nome = nome;
     }
 
     public void setDescricao(String descricao) {
         if(descricao.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
+            throw new IllegalArgumentException("Erro ao cadastrar descricao: Campo vazio.");
         this.descricao = descricao;
     }
 
     public void setLaboratorio(Laboratorio laboratorio){
-        this.laboratorio = laboratorio;
+        if(laboratorio != null)
+            this.laboratorio = laboratorio;
+        else
+            throw new NullPointerException("Laboratorio nao existe.");
     }
 
     public String getNumeroPatrimonio(){

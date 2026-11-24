@@ -1,10 +1,14 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Reserva {
-    private Usuario usuario;
+    private Solicitante solicitante;
     private Laboratorio laboratorio;
-    private int horaInicio, horaTermino;
+    private LocalDate data;
+    private LocalTime horaInicio, horaTermino;
     private enum Status {
         CONCLUIDA("concluida"),
-        MARCADA("marcada"),
+        ATIVA("ativa"),
         CANCELADA("cancelada");
 
         private final String descricao;
@@ -19,9 +23,9 @@ public class Reserva {
     }
     private Reserva.Status status;
 
-    public Reserva(Usuario usuario, Laboratorio laboratorio, int horaInicio, int horaTermino){
-        if(usuario != null)
-            this.usuario = usuario;
+    public Reserva(Solicitante solicitante, Laboratorio laboratorio, LocalDate data, LocalTime horaInicio, LocalTime horaTermino){
+        if(solicitante != null)
+            this.solicitante = solicitante;
         else
             throw new NullPointerException("Usuario nao existe.");
         if(laboratorio != null)
@@ -29,27 +33,62 @@ public class Reserva {
         else
             throw new NullPointerException("Laboratorio nao existe.");
 
-        if (horaInicio < 8 || horaInicio > 22) {
-            throw new IllegalArgumentException("Horario invalido.");
-        } else
-            this.horaInicio = horaInicio;
-        if (horaTermino < 8 || horaTermino > 22 || horaTermino < horaInicio) {
-            throw new IllegalArgumentException("Horario invalido.");
-        } else
-            this.horaTermino = horaTermino;
+        // if(laboratorio.conflita(data, horaInicio, horaTermino))
+           // excecao personalizada
 
-        status = Status.MARCADA;
+        if(data != null)
+            this.data = data;
+        else
+            throw new IllegalArgumentException("Data nao pode ser nula.");
+
+        if(horaInicio == null)
+            throw new NullPointerException("Horario nao pode ser nulo.");
+        if(horaTermino == null)
+            throw new NullPointerException("Horario nao pode ser nulo.");
+        if(horaInicio.isBefore(LocalTime.of(8,0)) || horaInicio.isAfter(LocalTime.of(22,0)))
+            throw new IllegalArgumentException("Horario invalido.");
+        if(horaTermino.isBefore(LocalTime.of(8,0)) || horaTermino.isAfter(LocalTime.of(22,0)) || !horaTermino.isAfter(horaInicio))
+            throw new IllegalArgumentException("Horario invalido.");
+        this.horaInicio = horaInicio;
+        this.horaTermino = horaTermino;
+
+        status = Status.ATIVA;
 
         laboratorio.adicionarReserva(this);
-        usuario.adicionarReserva(this);
+        solicitante.adicionarReserva(this);
     }
+
+    // getters
+
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    // depois pensamos na logica do solicitante
+    public Solicitante getSolicitante() {
+        return solicitante;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public LocalTime getHoraTermino() {
+        return horaTermino;
+    }
+
+    // metodos de regra de negocio a partir daqui
 
     public boolean concluida() {
         return this.status == Reserva.Status.CONCLUIDA;
     }
 
-    public boolean marcada() {
-        return this.status == Reserva.Status.MARCADA;
+    public boolean ativa() {
+        return this.status == Status.ATIVA;
     }
 
     public boolean cancelada() {

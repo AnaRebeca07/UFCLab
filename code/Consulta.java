@@ -9,7 +9,7 @@ public class Consulta {
         if(centro != null)
             centros.add(centro);
         else
-            throw new NullPointerException("Laboratorio nao existe.");
+            throw new NullPointerException("Centro nao existe.");
     }
 
     public static void adicionarUsuario(Usuario usuario) {

@@ -10,14 +10,14 @@ public class Discente extends Usuario {
 
     private void setMatricula(String matricula) {
         if(matricula.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
+            throw new IllegalArgumentException("Erro ao cadastrar matricula: Campo vazio.");
         if(!matricula.matches("[0-9]+"))
-            throw new IllegalArgumentException("Nao e compativel.");
+            throw new IllegalArgumentException("Erro ao cadastrar matricula: Nao e compativel.");
         if(matricula.length() != 6)
-            throw new IllegalArgumentException("Quantidade de digitos invalida.");
-        if(Consulta.cadastroRepetido(matricula))
+            throw new IllegalArgumentException("Erro ao cadastrar matricula: Quantidade de digitos invalida.");
+        //if(Consulta.cadastroRepetido(matricula))
             // excecao personalizada
-            this.matricula = matricula;
+        this.matricula = matricula;
     }
 
     @Override

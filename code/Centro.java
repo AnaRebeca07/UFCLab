@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class Centro {
     private String nome;
@@ -16,9 +15,7 @@ public class Centro {
 
     public void setNome(String nome) {
         if(nome.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
-        if(!nome.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Nao e compativel.");
+            throw new IllegalArgumentException("Erro em cadastrar nome: Campo vazio.");
         this.nome = nome;
     }
 
@@ -41,8 +38,8 @@ public class Centro {
 
     public void removerLaboratorio(Laboratorio laboratorio) {
         if (!laboratorios.contains(laboratorio))
-            throw new NoSuchElementException("Esse laboratorio nao existe.");
-        // if(laboratorio.possuiReservaMarcada())
+            throw new NullPointerException("Laboratorio nao existe ou nao pertence a esse centro.");
+        // if(laboratorio.possuiReservaAtiva())
         // excecao personalizada (regra de negocio)
         laboratorios.remove(laboratorio);
     }

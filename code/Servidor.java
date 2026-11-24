@@ -14,14 +14,14 @@ public class Servidor extends Usuario{
 
     private void setSIAPE(String SIAPE) {
         if(SIAPE.isEmpty())
-            throw new IllegalArgumentException("Campo vazio.");
+            throw new IllegalArgumentException("Erro ao cadastrar SIAPE: Campo vazio.");
         if(!SIAPE.matches("[0-9]+"))
-            throw new IllegalArgumentException("Nao e compativel.");
+            throw new IllegalArgumentException("Erro ao cadastrar SIAPE: Nao e compativel.");
         if(SIAPE.length() != 7)
-            throw new IllegalArgumentException("Quantidade de digitos invalida.");
-        if(Consulta.cadastroRepetido(SIAPE))
+            throw new IllegalArgumentException("Erro ao cadastrar SIAPE: Quantidade de digitos invalida.");
+        //if(Consulta.cadastroRepetido(SIAPE))
             // excecao personalizada
-            this.SIAPE = SIAPE;
+        this.SIAPE = SIAPE;
     }
 
     @Override
