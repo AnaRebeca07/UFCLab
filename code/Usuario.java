@@ -39,7 +39,7 @@ public abstract class Usuario extends Solicitante {
     public abstract String getCadastro();
 
     @Override
-    public int getPrioridade() {
-        return 0;
+    public void setPrioridade() {
+        this.prioridade = 0;
     }
 }

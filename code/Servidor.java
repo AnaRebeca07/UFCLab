@@ -19,8 +19,8 @@ public class Servidor extends Usuario{
             throw new IllegalArgumentException("Erro ao cadastrar SIAPE: Nao e compativel.");
         if(SIAPE.length() != 7)
             throw new IllegalArgumentException("Erro ao cadastrar SIAPE: Quantidade de digitos invalida.");
-        //if(Consulta.cadastroRepetido(SIAPE))
-            // excecao personalizada
+        if(Consulta.cadastroRepetido(SIAPE))
+            throw new RepeticaoException("Erro ao cadastrar SIAPE: Cadastro ja existe. ");
         this.SIAPE = SIAPE;
     }
 

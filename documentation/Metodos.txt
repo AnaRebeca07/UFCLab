@@ -1,0 +1,57 @@
+Metodos
+
+Centro
+    listarLaboratorios()
+    adicionarLaboratorio()
+    removerLaboatorio()
+
+Laboratorio
+    listarEquipamentos()
+    listarReservas()
+    listarReservasAtivas()
+    adicionarReserva()
+    possuiReservaAtiva()
+    listarReservasConflitantes()
+    adicionarEquipamento()
+    removerEquipamento()
+
+Equipamento
+    listarEmprestimos()
+    adicionarEmprestimo()
+    possuiEmprestimoNaoConcluido()
+
+Solicitante
+    listarReservas()
+    listarEmprestimos()
+    adicionarReserva()
+    adicionarEmprestimo()
+    getPrioridade()
+
+Usuario extends Solicitante
+    getCadastro()
+
+Manutencao extends Solicitante
+    // metodos a serem adicionados
+
+Consulta
+    adicionarCentro()
+    adicionarUsuario()
+    listarCentros()
+    listarUsuarios()
+    listarTodosLaboratorios()
+    listarTodosEquipamentos()
+    numeroPatrimonioRepetido()
+    cadastroRepetido()
+    listarTodosEmprestimosAndamento()
+    listarTodosEmprestimosAtraso()
+
+Gerenciador
+    reservar()
+
+Reserva
+    cancelar()
+
+Emprestimo
+
+Chamavel
+    // interface ???

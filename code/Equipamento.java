@@ -27,8 +27,8 @@ public class Equipamento {
             throw new IllegalArgumentException("Erro ao cadastrar numero de patrimonio: Campo vazio.");
         if(!numeroPatrimonio.matches("[0-9]+"))
             throw new IllegalArgumentException("Erro ao cadastrar numero de patrimonio: Nao e compativel.");
-        // if(Consulta.numeroPatrimonioRepetido(numeroPatrimonio))
-            // excecao personalizada
+        if(Consulta.numeroPatrimonioRepetido(numeroPatrimonio))
+            throw new RepeticaoException("Erro ao cadastrar numero de patrimonio: Numero do patrimonio ja foi cadastrado.");
         this.numeroPatrimonio = numeroPatrimonio;
     }
 

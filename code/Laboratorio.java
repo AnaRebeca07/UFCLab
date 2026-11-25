@@ -112,19 +112,6 @@ public class Laboratorio {
         return reservasConflitantes;
     }
 
-    public Reserva reservar(Solicitante solicitante, LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
-        List<Reserva> reservasConflitantes = listarReservasConflitantes(data, horaInicio, horaTermino);
-
-        for(int i = 0;i < reservasConflitantes.size();i++) {
-            if(solicitante.getPrioridade() >= reservasConflitantes.get(i).getSolicitante().getPrioridade())
-                reservasConflitantes.get(i).cancelar();
-            else
-                throw new IllegalStateException("Erro ao fazer reserva: Conflito de horario.");
-        }
-
-        return new Reserva(solicitante, this, data, horaInicio, horaTermino);
-    }
-
     public void adicionarEquipamento(Equipamento equipamento) {
         if(equipamento != null)
             equipamentos.add(equipamento);

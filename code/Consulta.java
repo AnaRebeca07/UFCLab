@@ -66,33 +66,33 @@ public class Consulta {
         return false;
     }
 
-    public static List<Emprestimo> listarEmprestimosAndamento() {
-        List<Emprestimo> emprestimosAndamento = new ArrayList<>();
+    public static List<Emprestimo> listarTodosEmprestimosAndamento() {
+        List<Emprestimo> emprestimosTodosAndamento = new ArrayList<>();
         List<Equipamento> equipamentos = listarTodosEquipamentos();
 
         for(int i = 0;i < equipamentos.size();i++) {
             List<Emprestimo> emprestimosEmAnalise = equipamentos.get(i).listarEmprestimos();
             for(int j = 0;j < emprestimosEmAnalise.size();i++) {
                 if(emprestimosEmAnalise.get(j).andamento())
-                    emprestimosAndamento.add(emprestimosEmAnalise.get(j));
+                    emprestimosTodosAndamento.add(emprestimosEmAnalise.get(j));
             }
         }
 
-        return emprestimosAndamento;
+        return emprestimosTodosAndamento;
     }
 
-    public static List<Emprestimo> listarEmprestimosAtraso() {
-        List<Emprestimo> emprestimosAtraso = new ArrayList<>();
+    public static List<Emprestimo> listarTodosEmprestimosAtraso() {
+        List<Emprestimo> emprestimosTodosAtraso = new ArrayList<>();
         List<Equipamento> equipamentos = listarTodosEquipamentos();
 
         for(int i = 0;i < equipamentos.size();i++) {
             List<Emprestimo> emprestimosEmAnalise = equipamentos.get(i).listarEmprestimos();
             for(int j = 0;j < emprestimosEmAnalise.size();i++) {
                 if(emprestimosEmAnalise.get(j).atraso())
-                    emprestimosAtraso.add(emprestimosEmAnalise.get(j));
+                    emprestimosTodosAtraso.add(emprestimosEmAnalise.get(j));
             }
         }
 
-        return emprestimosAtraso;
+        return emprestimosTodosAtraso;
     }
 }

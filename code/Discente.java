@@ -15,8 +15,8 @@ public class Discente extends Usuario {
             throw new IllegalArgumentException("Erro ao cadastrar matricula: Nao e compativel.");
         if(matricula.length() != 6)
             throw new IllegalArgumentException("Erro ao cadastrar matricula: Quantidade de digitos invalida.");
-        //if(Consulta.cadastroRepetido(matricula))
-            // excecao personalizada
+        if(Consulta.cadastroRepetido(matricula))
+            throw new RepeticaoException("Erro ao cadastrar matricula: Matricula ja existe. ");
         this.matricula = matricula;
     }
 

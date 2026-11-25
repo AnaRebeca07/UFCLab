@@ -8,7 +8,7 @@ public class Manutencao extends Solicitante {
     // metodos
 
     @Override
-    public int getPrioridade() {
-        return 1;
+    public void setPrioridade() {
+        this.prioridade = 1;
     }
 }

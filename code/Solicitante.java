@@ -5,6 +5,7 @@ public abstract class Solicitante {
     protected List<Reserva> reservas = new ArrayList<>();
     protected List<Emprestimo> emprestimos = new ArrayList<>();
     protected String senha;
+    protected int prioridade;
 
     public Solicitante (String senha) {
         setSenha(senha);
@@ -20,7 +21,7 @@ public abstract class Solicitante {
         return new ArrayList<Reserva>(this.reservas);
     }
 
-    public List<Emprestimo> listarEmprestimo(){
+    public List<Emprestimo> listarEmprestimos(){
         return new ArrayList<Emprestimo>(this.emprestimos);
     }
 
@@ -38,5 +39,9 @@ public abstract class Solicitante {
             throw new NullPointerException("Emprestimo nao existe.");
     }
 
-    public abstract int getPrioridade();
+    public abstract void setPrioridade();
+
+    public int getPrioridade() {
+        return prioridade;
+    }
 }
