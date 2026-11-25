@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class Usuario extends Solicitante {
+public abstract class Usuario extends Solicitante {
     protected String nome;
     protected String email;
     protected String identificador;
@@ -39,5 +36,10 @@ public class Usuario extends Solicitante {
         return email;
     }
 
-    public String getCadastro() { return ""; }
+    public abstract String getCadastro();
+
+    @Override
+    public int getPrioridade() {
+        return 0;
+    }
 }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solicitante {
+public abstract class Solicitante {
     protected List<Reserva> reservas = new ArrayList<>();
     protected List<Emprestimo> emprestimos = new ArrayList<>();
     protected String senha;
@@ -37,4 +37,6 @@ public class Solicitante {
         else
             throw new NullPointerException("Emprestimo nao existe.");
     }
+
+    public abstract int getPrioridade();
 }

@@ -33,9 +33,6 @@ public class Reserva {
         else
             throw new NullPointerException("Laboratorio nao existe.");
 
-        // if(laboratorio.conflita(data, horaInicio, horaTermino))
-           // excecao personalizada
-
         if(data != null)
             this.data = data;
         else
@@ -82,6 +79,10 @@ public class Reserva {
     }
 
     // metodos de regra de negocio a partir daqui
+
+    public void cancelar() {
+        status = Status.CANCELADA;
+    }
 
     public boolean concluida() {
         return this.status == Reserva.Status.CONCLUIDA;

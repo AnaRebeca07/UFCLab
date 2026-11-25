@@ -100,15 +100,29 @@ public class Laboratorio {
         return !listarReservasAtivas().isEmpty();
     }
 
-    // tirar daqui e colocar em uma interface + adicionar a versão de emprestimo
-    public boolean conflita(LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
+    public List<Reserva> listarReservasConflitantes(LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
         List<Reserva> reservasAtivas = listarReservasAtivas();
+        List<Reserva> reservasConflitantes = new ArrayList<>();
+
         for(int i = 0;i < reservasAtivas.size();i++) {
-            if (data.equals(reservasAtivas.get(i).getData()))
+            if(data.equals(reservasAtivas.get(i).getData()))
                 if(horaInicio.isBefore(reservasAtivas.get(i).getHoraTermino()) || horaTermino.isAfter(reservasAtivas.get(i).getHoraInicio()))
-                    return true;
+                    reservasConflitantes.add(reservasAtivas.get(i));
         }
-        return false;
+        return reservasConflitantes;
+    }
+
+    public Reserva reservar(Solicitante solicitante, LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
+        List<Reserva> reservasConflitantes = listarReservasConflitantes(data, horaInicio, horaTermino);
+
+        for(int i = 0;i < reservasConflitantes.size();i++) {
+            if(solicitante.getPrioridade() >= reservasConflitantes.get(i).getSolicitante().getPrioridade())
+                reservasConflitantes.get(i).cancelar();
+            else
+                throw new IllegalStateException("Erro ao fazer reserva: Conflito de horario.");
+        }
+
+        return new Reserva(solicitante, this, data, horaInicio, horaTermino);
     }
 
     public void adicionarEquipamento(Equipamento equipamento) {
