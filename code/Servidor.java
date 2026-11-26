@@ -28,4 +28,9 @@ public class Servidor extends Usuario{
     public String getCadastro() {
         return SIAPE;
     }
+
+    @Override
+    public void setLimiteReservas() {
+        this.limiteReservas = 5;
+    }
 }

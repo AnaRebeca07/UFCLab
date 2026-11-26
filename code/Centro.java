@@ -39,8 +39,8 @@ public class Centro {
     public void removerLaboratorio(Laboratorio laboratorio) {
         if (!laboratorios.contains(laboratorio))
             throw new NullPointerException("Laboratorio nao existe ou nao pertence a esse centro.");
-        // if(laboratorio.possuiReservaAtiva())
-        // excecao personalizada (regra de negocio)
+        // if(laboratorio.possuiReservaConfirmada())
+            // excecao personalizada (regra de negocio)
         laboratorios.remove(laboratorio);
     }
 }

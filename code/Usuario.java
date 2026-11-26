@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Usuario extends Solicitante {
     protected String nome;
     protected String email;
@@ -28,6 +31,11 @@ public abstract class Usuario extends Solicitante {
         this.email = email;
     }
 
+    @Override
+    public void setPrioridade() {
+        this.prioridade = 0;
+    }
+
     public String getNome(){
         return nome;
     }
@@ -38,8 +46,27 @@ public abstract class Usuario extends Solicitante {
 
     public abstract String getCadastro();
 
-    @Override
-    public void setPrioridade() {
-        this.prioridade = 0;
+    // metodos de regra de negocio
+
+    public List<Emprestimo> listarEmprestimosAtraso() {
+        List<Emprestimo> emprestimosAtraso = new ArrayList<>();
+
+        for(int i = 0;i < emprestimos.size();i++) {
+            if(emprestimos.get(i).atraso())
+                emprestimosAtraso.add(emprestimos.get(i));
+        }
+
+        return emprestimosAtraso;
+    }
+
+    public List<Emprestimo> listarEmprestimosAndamento() {
+        List<Emprestimo> emprestimosAndamento = new ArrayList<>();
+
+        for(int i = 0;i < emprestimos.size();i++) {
+            if(emprestimos.get(i).andamento())
+                emprestimosAndamento.add(emprestimos.get(i));
+        }
+
+        return emprestimosAndamento;
     }
 }

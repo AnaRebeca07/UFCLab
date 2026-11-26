@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,32 +69,33 @@ public class Consulta {
     }
 
     public static List<Emprestimo> listarTodosEmprestimosAndamento() {
-        List<Emprestimo> emprestimosTodosAndamento = new ArrayList<>();
-        List<Equipamento> equipamentos = listarTodosEquipamentos();
+        List<Emprestimo> todosEmprestimosAndamento = new ArrayList<>();
 
-        for(int i = 0;i < equipamentos.size();i++) {
-            List<Emprestimo> emprestimosEmAnalise = equipamentos.get(i).listarEmprestimos();
-            for(int j = 0;j < emprestimosEmAnalise.size();i++) {
-                if(emprestimosEmAnalise.get(j).andamento())
-                    emprestimosTodosAndamento.add(emprestimosEmAnalise.get(j));
-            }
+        for(int i = 0;i < usuarios.size();i++) {
+            todosEmprestimosAndamento.addAll(usuarios.get(i).listarEmprestimosAndamento());
         }
 
-        return emprestimosTodosAndamento;
+        return todosEmprestimosAndamento;
     }
 
     public static List<Emprestimo> listarTodosEmprestimosAtraso() {
-        List<Emprestimo> emprestimosTodosAtraso = new ArrayList<>();
-        List<Equipamento> equipamentos = listarTodosEquipamentos();
+        List<Emprestimo> todosEmprestimosAtraso = new ArrayList<>();
 
-        for(int i = 0;i < equipamentos.size();i++) {
-            List<Emprestimo> emprestimosEmAnalise = equipamentos.get(i).listarEmprestimos();
-            for(int j = 0;j < emprestimosEmAnalise.size();i++) {
-                if(emprestimosEmAnalise.get(j).atraso())
-                    emprestimosTodosAtraso.add(emprestimosEmAnalise.get(j));
-            }
+        for(int i = 0;i < usuarios.size();i++) {
+            todosEmprestimosAtraso.addAll(usuarios.get(i).listarEmprestimosAtraso());
         }
 
-        return emprestimosTodosAtraso;
+        return todosEmprestimosAtraso;
+    }
+
+    public static List<Laboratorio> consultarDisponibilidadeLaboratorio(LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
+        List<Laboratorio> laboratorios = listarTodosLaboratorios();
+        List<Laboratorio> laboratoriosDisponiveis = new ArrayList<>();
+
+        for(int i = 0;i < laboratorios.size();i++)
+            if(!laboratorios.get(i).possuiReservaConflitante(data, horaInicio, horaTermino))
+                laboratoriosDisponiveis.add(laboratorios.get(i));
+
+        return laboratoriosDisponiveis;
     }
 }

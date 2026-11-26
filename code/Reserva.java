@@ -8,7 +8,7 @@ public class Reserva {
     private LocalTime horaInicio, horaTermino;
     private enum Status {
         CONCLUIDA("concluida"),
-        ATIVA("ativa"),
+        CONFIRMADA("confirmada"),
         CANCELADA("cancelada");
 
         private final String descricao;
@@ -49,7 +49,7 @@ public class Reserva {
         this.horaInicio = horaInicio;
         this.horaTermino = horaTermino;
 
-        status = Status.ATIVA;
+        status = Status.CONFIRMADA;
 
         laboratorio.adicionarReserva(this);
         solicitante.adicionarReserva(this);
@@ -88,8 +88,8 @@ public class Reserva {
         return this.status == Reserva.Status.CONCLUIDA;
     }
 
-    public boolean ativa() {
-        return this.status == Status.ATIVA;
+    public boolean confirmada() {
+        return this.status == Status.CONFIRMADA;
     }
 
     public boolean cancelada() {

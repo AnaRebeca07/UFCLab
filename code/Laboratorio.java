@@ -71,47 +71,6 @@ public class Laboratorio {
 
     // metodos de regra de negocio a partir daqui
 
-    public List<Equipamento> listarEquipamentos(){
-        return new ArrayList<Equipamento>(this.equipamentos);
-    }
-
-    public List<Reserva> listarReservas(){
-        return new ArrayList<Reserva>(this.reservas);
-    }
-
-    public List<Reserva> listarReservasAtivas() {
-        List<Reserva> reservasAtivas = new ArrayList<>();
-
-        for(int i = 0;i < reservas.size();i++)
-            if(reservas.get(i).ativa())
-                reservasAtivas.add(reservas.get(i));
-
-        return reservasAtivas;
-    }
-
-    public void adicionarReserva(Reserva reserva) {
-        if(reserva != null)
-            reservas.add(reserva);
-        else
-            throw new NullPointerException("Reserva nao existe.");
-    }
-
-    public boolean possuiReservaAtiva() {
-        return !listarReservasAtivas().isEmpty();
-    }
-
-    public List<Reserva> listarReservasConflitantes(LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
-        List<Reserva> reservasAtivas = listarReservasAtivas();
-        List<Reserva> reservasConflitantes = new ArrayList<>();
-
-        for(int i = 0;i < reservasAtivas.size();i++) {
-            if(data.equals(reservasAtivas.get(i).getData()))
-                if(horaInicio.isBefore(reservasAtivas.get(i).getHoraTermino()) || horaTermino.isAfter(reservasAtivas.get(i).getHoraInicio()))
-                    reservasConflitantes.add(reservasAtivas.get(i));
-        }
-        return reservasConflitantes;
-    }
-
     public void adicionarEquipamento(Equipamento equipamento) {
         if(equipamento != null)
             equipamentos.add(equipamento);
@@ -123,7 +82,52 @@ public class Laboratorio {
         if (!equipamentos.contains(equipamento))
             throw new NullPointerException("Esse equipamento nao existe ou nao pertence a esse laboratorio.");
         // if(equipamento.possuiEmprestimoNaoConcluido())
-            // excecao personalizada (regra de negocio)
+        // excecao personalizada (regra de negocio)
         equipamentos.remove(equipamento);
+    }
+
+    public List<Equipamento> listarEquipamentos(){
+        return new ArrayList<Equipamento>(this.equipamentos);
+    }
+
+    public void adicionarReserva(Reserva reserva) {
+        if(reserva != null)
+            reservas.add(reserva);
+        else
+            throw new NullPointerException("Reserva nao existe.");
+    }
+
+    public List<Reserva> listarReservas(){
+        return new ArrayList<Reserva>(this.reservas);
+    }
+
+    public List<Reserva> listarReservasConfirmadas() {
+        List<Reserva> reservasConfirmadas = new ArrayList<>();
+
+        for(int i = 0;i < reservas.size();i++)
+            if(reservas.get(i).confirmada())
+                reservasConfirmadas.add(reservas.get(i));
+
+        return reservasConfirmadas;
+    }
+
+    public boolean possuiReservaConfirmada() {
+        return !listarReservasConfirmadas().isEmpty();
+    }
+
+    public List<Reserva> listarReservasConflitantesLaboratorio(LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
+        List<Reserva> reservasConfirmadas = listarReservasConfirmadas();
+        List<Reserva> reservasConflitantesLaboratorio = new ArrayList<>();
+
+        for(int i = 0;i < reservasConfirmadas.size();i++) {
+            if(data.equals(reservasConfirmadas.get(i).getData()))
+                if(horaInicio.isBefore(reservasConfirmadas.get(i).getHoraTermino()) || horaTermino.isAfter(reservasConfirmadas.get(i).getHoraInicio()))
+                    reservasConflitantesLaboratorio.add(reservasConfirmadas.get(i));
+        }
+        return reservasConflitantesLaboratorio;
+    }
+
+    public boolean possuiReservaConflitante(LocalDate data, LocalTime horaInicio, LocalTime horaTermino) {
+        return !listarReservasConflitantesLaboratorio(data, horaInicio, horaTermino).isEmpty();
     }
 }

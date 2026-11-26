@@ -24,4 +24,22 @@ public class Discente extends Usuario {
     public String getCadastro() {
         return matricula;
     }
+
+    @Override
+    public void setLimiteReservas() {
+        this.limiteReservas = 3;
+    }
+
+    public void checarAutorizacao() {
+        if(listarEmprestimosAtraso().isEmpty())
+            autorizado = true;
+        else
+            autorizado = false;
+    }
+
+    @Override
+    public boolean isAutorizado() {
+        checarAutorizacao();
+        return autorizado;
+    }
 }
